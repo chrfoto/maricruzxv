@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>XV Años - Maricruz García López</title>
+    
+    <!-- Librerías Externas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --champagne: #fdfcf0;
+            --gold-dark: #b8860b;
+            --gold-light: #d4af37;
+            --text-main: #5d4a3e;
+        }
+
+        /* Safari Fix for Background Patterns */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--champagne);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm24 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-30 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm36-12c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm48 24c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2z' fill='%23d4af37' fill-opacity='0.04'/%3E%3C/svg%3E");
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-serif-elegant { font-family: 'Cinzel Decorative', serif; }
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.65)), 
+                        url('https://i.imgur.com/e7259516-192b-4ce6-8261-49c9bd7df323.jpg');
+            background-size: cover;
+            background-position: center 25%;
+            height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            position: relative;
+        }
+
+        /* --- Name Styling con corrección de M --- */
+        .name-container {
+            display: inline-block;
+            text-align: left;
+            position: relative;
+            padding: 10px 20px;
+        }
+        .main-name {
+            font-size: clamp(4.5rem, 15vw, 9rem);
+            line-height: 1.1;
+            padding-left: 10px; /* Margen para que la M no se corte */
+            margin-bottom: 0;
+            display: block;
+        }
+        .last-name {
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            margin-top: -10px;
+            text-align: right;
+            display: block;
+            padding-right: 15px;
+            opacity: 0.95;
+        }
+
+        /* --- Safari-Optimized Gold Gradient --- */
+        .gold-text {
+            background: linear-gradient(to right, #8e6d13, #d4af37, #fcf6ba, #d4af37, #8e6d13);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: var(--gold-light); /* Fallback */
+        }
+
+        /* --- Estructura Vertical Móvil --- */
+        .card-glass {
+            background: rgba(255, 255, 255, 0.96);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            position: relative;
+            transform: translateZ(0); /* GPU acceleration for Safari */
+        }
+
+        .ornament {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .ornament-tl { top: 0; left: 0; border-top: 3px double var(--gold-light); border-left: 3px double var(--gold-light); border-radius: 15px 0 0 0; }
+        .ornament-tr { top: 0; right: 0; border-top: 3px double var(--gold-light); border-right: 3px double var(--gold-light); border-radius: 0 15px 0 0; }
+        .ornament-bl { bottom: 0; left: 0; border-bottom: 3px double var(--gold-light); border-left: 3px double var(--gold-light); border-radius: 0 0 0 15px; }
+        .ornament-br { bottom: 0; right: 0; border-bottom: 3px double var(--gold-light); border-right: 3px double var(--gold-light); border-radius: 0 0 15px 0; }
+
+        /* --- Scroll Animation --- */
+        .reveal {
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.17, 0.55, 0.55, 1);
+            will-change: transform, opacity;
+        }
+        .reveal-up { transform: translateY(30px); }
+        .reveal-scale { transform: scale(0.97); }
+        .reveal.active {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #b8860b, #d4af37, #fcf6ba);
+            background-size: 200% 200%;
+            color: white;
+            -webkit-animation: gradient-shift 4s ease infinite;
+            animation: gradient-shift 4s ease infinite;
+            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.25);
+        }
+
+        @-webkit-keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Carrusel Vertical-First --- */
+        .carousel-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 20px;
+            padding: 8px;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid var(--gold-light);
+        }
+        .carousel-slide { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .carousel-item { min-width: 100%; aspect-ratio: 3/4.2; object-fit: cover; border-radius: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section: Portrait Optimized -->
+    <section class="hero-bg flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        <div class="relative z-10 reveal reveal-scale active">
+            <p class="uppercase tracking-[0.5em] text-white text-[10px] mb-6 font-bold drop-shadow-xl opacity-90">Mi Historia Comienza Aquí</p>
+            
+            <div class="name-container">
+                <h1 class="font-cursive gold-text main-name">Maricruz</h1>
+                <span class="font-cursive gold-text last-name">García López</span>
+            </div>
+
+            <div class="max-w-[320px] mx-auto mt-8 bg-black/45 p-6 rounded-2xl backdrop-blur-md italic text-white text-xs md:text-sm border border-white/20 shadow-2xl relative">
+                <i class="fa-solid fa-quote-left text-[#d4af37] text-xl absolute -top-3 -left-2"></i>
+                "Cumplo 15 años y me lleno de emoción. Dios mi Padre me ama, lo sé, lo percibo, lo siento, lo vivo. Dios Señor me mira tiernamente y llena mi existencia de belleza y alegría."
+                <i class="fa-solid fa-quote-right text-[#d4af37] text-xl absolute -bottom-3 -right-2"></i>
+            </div>
+            
+            <div class="mt-16">
+                <i class="fa-solid fa-angles-down text-white text-lg animate-bounce opacity-70"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fecha y Countdown: Tarjeta Vertical -->
+    <section class="py-20 px-4 reveal reveal-up">
+        <div class="max-w-[380px] mx-auto text-center card-glass p-10 md:p-14 rounded-[35px] shadow-xl overflow-hidden">
+            <div class="ornament ornament-tl"></div><div class="ornament ornament-tr"></div>
+            <div class="ornament ornament-bl"></div><div class="ornament ornament-br"></div>
+            
+            <p class="text-[9px] uppercase tracking-[0.4em] mb-4 text-gold-dark font-bold">Un Día Inolvidable</p>
+            
+            <div class="flex items-center justify-center gap-4 mb-8">
+                <div class="h-[1px] bg-gold-light/30 flex-1"></div>
+                <i class="fa-solid fa-crown text-gold-light text-sm"></i>
+                <div class="h-[1px] bg-gold-light/30 flex-1"></div>
+            </div>
+            
+            <div class="mb-10">
+                <p class="text-lg uppercase tracking-[0.3em] mb-2 font-medium">Sábado</p>
+                <p class="text-8xl font-serif-elegant gold-text leading-none">16</p>
+                <p class="text-lg uppercase tracking-[0.3em] mt-2 font-medium">Mayo 2026</p>
+                <p class="text-[9px] text-gray-400 mt-3 tracking-widest font-bold">SANTA ANA MAYA, MICH.</p>
+            </div>
+
+            <div class="grid grid-cols-4 gap-3 max-w-xs mx-auto mt-10">
+                <div class="flex flex-col"><span id="days" class="text-3xl font-serif-elegant gold-text">00</span><span class="text-[7px] uppercase tracking-widest font-black">Días</span></div>
+                <div class="flex flex-col"><span id="hours" class="text-3xl font-serif-elegant gold-text">00</span><span class="text-[7px] uppercase tracking-widest font-black">Hrs</span></div>
+                <div class="flex flex-col"><span id="minutes" class="text-3xl font-serif-elegant gold-text">00</span><span class="text-[7px] uppercase tracking-widest font-black">Min</span></div>
+                <div class="flex flex-col"><span id="seconds" class="text-3xl font-serif-elegant gold-text">00</span><span class="text-[7px] uppercase tracking-widest font-black">Seg</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historia: Carrusel Vertical -->
+    <section class="py-16 px-4 reveal">
+        <div class="max-w-xl mx-auto text-center">
+            <h3 class="text-2xl font-serif-elegant gold-text mb-2">Mi Historia</h3>
+            <p class="text-gray-400 italic text-xs mb-10">A través de los ojos del tiempo</p>
+            
+            <div class="carousel-container relative group">
+                <div id="carouselSlide" class="carousel-slide">
+                    <img src="https://i.imgur.com/e7259516-192b-4ce6-8261-49c9bd7df323.jpg" class="carousel-item" alt="Vestido Actual">
+                    <img src="https://i.imgur.com/xujadFS.jpg" class="carousel-item" alt="Infancia 1">
+                    <img src="https://i.imgur.com/RWdi8yK.jpg" class="carousel-item" alt="Infancia 2">
+                    <img src="https://i.imgur.com/nWHtZGO.jpg" class="carousel-item" alt="Infancia 3">
+                    <img src="https://i.imgur.com/jOIWZHZ.jpg" class="carousel-item" alt="Infancia 4">
+                    <img src="https://i.imgur.com/AJLIqGi.jpg" class="carousel-item" alt="Infancia 5">
+                    <img src="https://i.imgur.com/yCXbvYz.jpg" class="carousel-item" alt="Infancia 6">
+                    <img src="https://i.imgur.com/lm1fC69.jpg" class="carousel-item" alt="Infancia 7">
+                    <img src="https://i.imgur.com/anZQogt.jpg" class="carousel-item" alt="Infancia 8">
+                    <img src="https://i.imgur.com/gbFkIDM.jpg" class="carousel-item" alt="Infancia 9">
+                </div>
+                
+                <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gold-dark shadow-md active:scale-95">
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gold-dark shadow-md active:scale-95">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Padres y Padrinos -->
+    <section class="py-20 px-6 bg-[#fdfcf0]/70 reveal">
+        <div class="max-w-[360px] mx-auto text-center space-y-12">
+            <div>
+                <i class="fa-solid fa-dove text-gold-light mb-4 text-xl opacity-60"></i>
+                <h4 class="text-[9px] uppercase tracking-[0.4em] font-black text-gray-400 mb-6">Mis Amados Padres</h4>
+                <div class="space-y-2">
+                    <p class="text-2xl font-serif-elegant">Rafael García Nuñez</p>
+                    <p class="text-2xl font-serif-elegant">M. Concepción López Ayala</p>
+                </div>
+            </div>
+            
+            <div class="h-[1px] bg-gradient-to-r from-transparent via-gold-light/40 to-transparent w-full"></div>
+
+            <div class="space-y-10">
+                <div>
+                    <h4 class="text-[9px] uppercase tracking-[0.4em] font-black text-gray-400 mb-6">Mis Padrinos</h4>
+                    <p class="text-xl font-serif-elegant">Jose Antonio López Ayala</p>
+                    <p class="text-xl font-serif-elegant">Melody Gabriela López</p>
+                </div>
+                <div class="p-5 bg-white rounded-2xl border border-gold-light/10 shadow-sm">
+                    <p class="text-[8px] uppercase tracking-widest text-gold-dark font-black mb-1 italic">Madrina de confirmación</p>
+                    <p class="text-xl font-serif-elegant">Melanie Sarahí López</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ubicación Única -->
+    <section class="py-20 px-4 reveal reveal-up">
+        <div class="max-w-[400px] mx-auto text-center">
+            <div class="card-glass p-10 rounded-[45px] shadow-2xl">
+                <div class="ornament ornament-tr"></div><div class="ornament ornament-bl"></div>
+                
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md border border-gold-light/20">
+                    <i class="fa-solid fa-location-dot text-3xl gold-text"></i>
+                </div>
+                <h4 class="text-xl font-serif-elegant mb-1 uppercase tracking-tighter">Rancho Nuevo - Cuervo</h4>
+                <p class="text-gold-dark font-black tracking-widest text-[10px] mb-4">IGLESIA SANTA ELENA DE LA CRUZ</p>
+                <p class="text-[11px] text-gray-500 mb-8 italic">Mismo recinto para Ceremonia y Recepción.<br><strong>Santa Ana Maya, Michoacán.</strong></p>
+                <a href="https://maps.app.goo.gl/3hWshwtBoQauEi2s7" target="_blank" class="btn-gold px-12 py-4 rounded-full inline-block text-[10px] font-black uppercase tracking-[0.3em]">¿Cómo llegar?</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programa -->
+    <section class="py-20 px-6 bg-white reveal">
+        <div class="max-w-[340px] mx-auto">
+            <h3 class="text-2xl font-serif-elegant text-center mb-12 gold-text">Itinerario</h3>
+            <div class="relative space-y-12">
+                <div class="absolute left-[24px] top-0 bottom-0 w-[1px] bg-gold-light/20"></div>
+                
+                <div class="flex items-center gap-6 reveal reveal-up">
+                    <div class="z-10 w-12 h-12 bg-white border border-gold-light rounded-full flex items-center justify-center shadow-md"><i class="fa-solid fa-church gold-text text-sm"></i></div>
+                    <div class="flex-1">
+                        <span class="text-gold-dark font-black text-[10px]">14:00 PM</span>
+                        <p class="font-serif-elegant text-lg">Misa de Acción de Gracias</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6 reveal reveal-up delay-100">
+                    <div class="z-10 w-12 h-12 bg-white border border-gold-light rounded-full flex items-center justify-center shadow-md"><i class="fa-solid fa-utensils gold-text text-sm"></i></div>
+                    <div class="flex-1">
+                        <span class="text-gold-dark font-black text-[10px]">15:00 PM</span>
+                        <p class="font-serif-elegant text-lg">Comida Familiar</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6 reveal reveal-up delay-200">
+                    <div class="z-10 w-12 h-12 bg-white border border-gold-light rounded-full flex items-center justify-center shadow-md"><i class="fa-solid fa-wand-sparkles gold-text text-sm"></i></div>
+                    <div class="flex-1">
+                        <span class="text-gold-dark font-black text-[10px]">19:00 PM</span>
+                        <p class="font-serif-elegant text-lg">Vals de Honor</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6 reveal reveal-up delay-300">
+                    <div class="z-10 w-12 h-12 bg-white border border-gold-light rounded-full flex items-center justify-center shadow-md"><i class="fa-solid fa-music gold-text text-sm"></i></div>
+                    <div class="flex-1">
+                        <span class="text-gold-dark font-black text-[10px]">20:00 PM</span>
+                        <p class="font-serif-elegant text-lg">Gran Baile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Corte: Vertical Grid -->
+    <section class="py-20 px-4 bg-[#fdfcf0]/40 reveal">
+        <div class="max-w-xl mx-auto text-center">
+            <h3 class="text-2xl font-serif-elegant mb-16 gold-text">Corte de Honor</h3>
+            
+            <div class="mb-20">
+                <i class="fa-solid fa-crown text-3xl gold-text mb-4"></i>
+                <h4 class="text-[9px] uppercase tracking-widest font-black text-gray-400 mb-1">Chambelán Principal</h4>
+                <p class="text-4xl font-cursive">Mauricio López</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3 px-4 max-w-[280px] mx-auto">
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gold-light/10 flex items-center justify-center gap-3"><i class="fa-solid fa-star text-gold-light text-[8px]"></i><p class="text-xs font-medium">Jared Vázquez Jungo</p></div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gold-light/10 flex items-center justify-center gap-3"><i class="fa-solid fa-star text-gold-light text-[8px]"></i><p class="text-xs font-medium">Julio Díaz Magaña</p></div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gold-light/10 flex items-center justify-center gap-3"><i class="fa-solid fa-star text-gold-light text-[8px]"></i><p class="text-xs font-medium">Juan Pablo Ojeda Ávila</p></div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gold-light/10 flex items-center justify-center gap-3"><i class="fa-solid fa-star text-gold-light text-[8px]"></i><p class="text-xs font-medium">Gerardo Zamudio Ruiz</p></div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gold-light/10 flex items-center justify-center gap-3"><i class="fa-solid fa-star text-gold-light text-[8px]"></i><p class="text-xs font-medium">Alan Rodríguez Silva</p></div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gold-light/10 flex items-center justify-center gap-3"><i class="fa-solid fa-star text-gold-light text-[8px]"></i><p class="text-xs font-medium">Jose Luis Molina Contreras</p></div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gold-light/10 flex items-center justify-center gap-3"><i class="fa-solid fa-star text-gold-light text-[8px]"></i><p class="text-xs font-medium">Ismael Juárez</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP: Mobile UI -->
+    <section class="py-20 px-4 reveal reveal-up">
+        <div class="max-w-[360px] mx-auto card-glass p-10 rounded-[40px] shadow-2xl">
+            <h3 class="text-2xl font-serif-elegant text-center mb-6 gold-text">Asistencia</h3>
+            <p class="text-center text-[10px] text-gray-400 mb-10 italic uppercase tracking-widest font-bold">Confirma antes del 1 de Mayo.</p>
+            
+            <form id="rsvpForm" class="space-y-8">
+                <div class="relative">
+                    <label class="text-[8px] uppercase tracking-widest font-bold text-gold-dark block mb-1">Familia / Invitado</label>
+                    <input type="text" id="guestName" required class="w-full border-b border-gold-light/30 py-2 bg-transparent outline-none focus:border-gold-light transition-all text-sm font-medium" placeholder="Ej. Familia García">
+                </div>
+                <div class="relative">
+                    <label class="text-[8px] uppercase tracking-widest font-bold text-gold-dark block mb-1">Número de Personas</label>
+                    <select id="guestCount" class="w-full border-b border-gold-light/30 py-2 bg-transparent outline-none focus:border-gold-light transition-all text-sm font-medium">
+                        <option>1 Persona</option><option>2 Personas</option><option>3 Personas</option><option>4 Personas</option><option>Familia Completa</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full btn-gold py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] shadow-xl active:scale-95 transition-transform">Confirmar por WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center bg-[#fdfcf0]">
+        <p class="font-cursive text-6xl gold-text mb-6">¡Te espero!</p>
+        <div class="h-[1px] bg-gradient-to-r from-transparent via-gold-light/30 to-transparent w-48 mx-auto mb-8"></div>
+        <p class="text-[8px] text-gray-400 uppercase tracking-widest font-black">Mis Quince Años - Maricruz García López</p>
+    </footer>
+
+    <script>
+        // --- Carrusel Optimized for Mobile ---
+        let currentSlide = 0;
+        const totalSlides = 10;
+        const slideElement = document.getElementById('carouselSlide');
+        function updateSlide() { slideElement.style.transform = `translateX(-${currentSlide * 100}%)`; }
+        function nextSlide() { currentSlide = (currentSlide + 1) % totalSlides; updateSlide(); }
+        function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; updateSlide(); }
+        
+        let carouselInterval = setInterval(nextSlide, 5000);
+        
+        // --- Countdown Logic ---
+        const targetDate = new Date("May 16, 2026 14:00:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const dist = targetDate - now;
+            if (dist < 0) return;
+            document.getElementById("days").innerText = Math.floor(dist / 86400000).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((dist % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((dist % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = Math.floor((dist % 60000) / 1000).toString().padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000); updateCountdown();
+
+        // --- WhatsApp Interaction ---
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('guestName').value;
+            const pax = document.getElementById('guestCount').value;
+            const message = `¡Hola Maricruz! Confirmamos asistencia familiar a tus XV años. Familia: ${name}, Asistentes: ${pax}. ¡Allí nos vemos!`;
+            const whatsappUrl = `https://wa.me/524432216719?text=${encodeURIComponent(message)}`;
+            
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#b8860b', '#d4af37', '#fdfcf0'] });
+            
+            setTimeout(() => { window.open(whatsappUrl, '_blank'); }, 1200);
+        });
+
+        // --- Intersection Observer for Scroll Animations ---
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
