@@ -21,15 +21,60 @@
             --text-main: #5d4a3e;
         }
 
-        /* Safari Fix for Background Patterns */
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--champagne);
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm24 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-30 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm36-12c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm48 24c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2zm-12 0c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2s-.9 2-2 2h-2c-1.1 0-2-.9-2-2z' fill='%23d4af37' fill-opacity='0.04'/%3E%3C/svg%3E");
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            position: relative;
         }
+
+        /* --- Fondo Decorativo Multi-capa --- */
+        .bg-decor-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Capa 1: Nueva imagen (Fondo más profundo) */
+        .bg-layer-deep {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.04; /* Muy sutil */
+        }
+        .leaf-item {
+            position: absolute;
+            background-image: url('https://i.imgur.com/zQ6WqXV.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .l-1 { width: 400px; height: 400px; top: 5%; right: -100px; transform: rotate(45deg); }
+        .l-2 { width: 350px; height: 350px; bottom: 15%; left: -50px; transform: rotate(-30deg) scaleX(-1); }
+        .l-3 { width: 300px; height: 300px; top: 50%; right: -50px; transform: rotate(180deg); }
+
+        /* Capa 2: Flores anteriores (Resaltan por encima de la capa deep) */
+        .bg-layer-mid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.12; /* Resalta más que la base */
+        }
+        .flower-item {
+            position: absolute;
+            background-image: url('https://i.imgur.com/cxJ1Ghz.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .f-1 { width: 280px; height: 280px; top: 15%; left: -60px; transform: rotate(10deg) scale(1.1); }
+        .f-2 { width: 220px; height: 220px; top: 45%; right: -40px; transform: rotate(-110deg) scaleX(-1); }
+        .f-3 { width: 350px; height: 350px; bottom: 5%; left: -80px; transform: rotate(25deg); }
+        .f-4 { width: 250px; height: 250px; top: 75%; right: 5%; transform: rotate(160deg) scale(0.8); }
 
         .font-serif-elegant { font-family: 'Cinzel Decorative', serif; }
         .font-cursive { font-family: 'Great Vibes', cursive; }
@@ -39,7 +84,7 @@
                         url('https://i.imgur.com/e7259516-192b-4ce6-8261-49c9bd7df323.jpg');
             background-size: cover;
             background-position: center 25%;
-            height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            height: 100dvh;
             position: relative;
         }
 
@@ -48,12 +93,13 @@
             display: inline-block;
             text-align: left;
             position: relative;
-            padding: 10px 20px;
+            padding: 15px 25px;
+            overflow: visible;
         }
         .main-name {
             font-size: clamp(4.5rem, 15vw, 9rem);
             line-height: 1.1;
-            padding-left: 10px; /* Margen para que la M no se corte */
+            padding-left: 20px;
             margin-bottom: 0;
             display: block;
         }
@@ -62,40 +108,56 @@
             margin-top: -10px;
             text-align: right;
             display: block;
-            padding-right: 15px;
+            padding-right: 25px;
             opacity: 0.95;
         }
 
-        /* --- Safari-Optimized Gold Gradient --- */
         .gold-text {
             background: linear-gradient(to right, #8e6d13, #d4af37, #fcf6ba, #d4af37, #8e6d13);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: var(--gold-light); /* Fallback */
+            color: var(--gold-light);
         }
 
-        /* --- Estructura Vertical Móvil --- */
         .card-glass {
-            background: rgba(255, 255, 255, 0.96);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(212, 175, 55, 0.25);
             position: relative;
-            transform: translateZ(0); /* GPU acceleration for Safari */
+            transform: translateZ(0);
         }
 
-        .ornament {
+        /* Esquina decorativa con la primera imagen */
+        .corner-custom-img {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            top: -15px;
+            left: -15px;
+            width: 120px;
+            height: 120px;
+            background-image: url('https://i.imgur.com/DjHjzNg.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 30;
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.9;
         }
-        .ornament-tl { top: 0; left: 0; border-top: 3px double var(--gold-light); border-left: 3px double var(--gold-light); border-radius: 15px 0 0 0; }
-        .ornament-tr { top: 0; right: 0; border-top: 3px double var(--gold-light); border-right: 3px double var(--gold-light); border-radius: 0 15px 0 0; }
-        .ornament-bl { bottom: 0; left: 0; border-bottom: 3px double var(--gold-light); border-left: 3px double var(--gold-light); border-radius: 0 0 0 15px; }
-        .ornament-br { bottom: 0; right: 0; border-bottom: 3px double var(--gold-light); border-right: 3px double var(--gold-light); border-radius: 0 0 15px 0; }
+
+        @media (max-width: 640px) {
+            .corner-custom-img { width: 90px; height: 90px; top: -10px; left: -10px; }
+        }
+
+        .ornament-simple {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        .orn-tr { top: 0; right: 0; border-top: 2px solid var(--gold-light); border-right: 2px solid var(--gold-light); border-radius: 0 15px 0 0; }
+        .orn-bl { bottom: 0; left: 0; border-bottom: 2px solid var(--gold-light); border-left: 2px solid var(--gold-light); border-radius: 0 0 0 15px; }
+        .orn-br { bottom: 0; right: 0; border-bottom: 2px solid var(--gold-light); border-right: 2px solid var(--gold-light); border-radius: 0 0 15px 0; }
 
         /* --- Scroll Animation --- */
         .reveal {
@@ -105,10 +167,7 @@
         }
         .reveal-up { transform: translateY(30px); }
         .reveal-scale { transform: scale(0.97); }
-        .reveal.active {
-            opacity: 1;
-            transform: translate(0) scale(1);
-        }
+        .reveal.active { opacity: 1; transform: translate(0) scale(1); }
 
         .btn-gold {
             background: linear-gradient(45deg, #b8860b, #d4af37, #fcf6ba);
@@ -119,18 +178,13 @@
             box-shadow: 0 6px 20px rgba(184, 134, 11, 0.25);
         }
 
-        @-webkit-keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* --- Carrusel Vertical-First --- */
+        /* --- Carrusel --- */
         .carousel-container {
             width: 100%;
             max-width: 400px;
@@ -148,7 +202,24 @@
 </head>
 <body>
 
-    <!-- Hero Section: Portrait Optimized -->
+    <!-- Contenedor de Decoración de Fondo (Capas) -->
+    <div class="bg-decor-container">
+        <!-- Capa profunda: Nueva imagen zQ6WqXV -->
+        <div class="bg-layer-deep">
+            <div class="leaf-item l-1"></div>
+            <div class="leaf-item l-2"></div>
+            <div class="leaf-item l-3"></div>
+        </div>
+        <!-- Capa media: Flores cxJ1Ghz (Resaltan más) -->
+        <div class="bg-layer-mid">
+            <div class="flower-item f-1"></div>
+            <div class="flower-item f-2"></div>
+            <div class="flower-item f-3"></div>
+            <div class="flower-item f-4"></div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
     <section class="hero-bg flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         <div class="relative z-10 reveal reveal-scale active">
             <p class="uppercase tracking-[0.5em] text-white text-[10px] mb-6 font-bold drop-shadow-xl opacity-90">Mi Historia Comienza Aquí</p>
@@ -170,13 +241,15 @@
         </div>
     </section>
 
-    <!-- Fecha y Countdown: Tarjeta Vertical -->
+    <!-- Fecha y Countdown -->
     <section class="py-20 px-4 reveal reveal-up">
-        <div class="max-w-[380px] mx-auto text-center card-glass p-10 md:p-14 rounded-[35px] shadow-xl overflow-hidden">
-            <div class="ornament ornament-tl"></div><div class="ornament ornament-tr"></div>
-            <div class="ornament ornament-bl"></div><div class="ornament ornament-br"></div>
+        <div class="max-w-[380px] mx-auto text-center card-glass p-10 md:p-14 rounded-[35px] shadow-xl overflow-visible">
+            <div class="corner-custom-img"></div>
+            <div class="ornament-simple orn-tr"></div>
+            <div class="ornament-simple orn-bl"></div>
+            <div class="ornament-simple orn-br"></div>
             
-            <p class="text-[9px] uppercase tracking-[0.4em] mb-4 text-gold-dark font-bold">Un Día Inolvidable</p>
+            <p class="text-[9px] uppercase tracking-[0.4em] mb-4 text-gold-dark font-bold mt-4">Un Día Inolvidable</p>
             
             <div class="flex items-center justify-center gap-4 mb-8">
                 <div class="h-[1px] bg-gold-light/30 flex-1"></div>
@@ -200,7 +273,7 @@
         </div>
     </section>
 
-    <!-- Historia: Carrusel Vertical -->
+    <!-- Historia -->
     <section class="py-16 px-4 reveal">
         <div class="max-w-xl mx-auto text-center">
             <h3 class="text-2xl font-serif-elegant gold-text mb-2">Mi Historia</h3>
@@ -220,18 +293,18 @@
                     <img src="https://i.imgur.com/gbFkIDM.jpg" class="carousel-item" alt="Infancia 9">
                 </div>
                 
-                <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gold-dark shadow-md active:scale-95">
+                <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gold-dark shadow-md active:scale-90 transition-transform">
                     <i class="fa-solid fa-chevron-left text-xs"></i>
                 </button>
-                <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gold-dark shadow-md active:scale-95">
+                <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gold-dark shadow-md active:scale-90 transition-transform">
                     <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- Padres y Padrinos -->
-    <section class="py-20 px-6 bg-[#fdfcf0]/70 reveal">
+    <!-- Honor Section -->
+    <section class="py-20 px-6 bg-white/30 reveal">
         <div class="max-w-[360px] mx-auto text-center space-y-12">
             <div>
                 <i class="fa-solid fa-dove text-gold-light mb-4 text-xl opacity-60"></i>
@@ -250,7 +323,8 @@
                     <p class="text-xl font-serif-elegant">Jose Antonio López Ayala</p>
                     <p class="text-xl font-serif-elegant">Melody Gabriela López</p>
                 </div>
-                <div class="p-5 bg-white rounded-2xl border border-gold-light/10 shadow-sm">
+                <div class="p-5 bg-white rounded-2xl border border-gold-light/10 shadow-sm relative overflow-visible">
+                    <div class="corner-custom-img" style="width: 60px; height: 60px; top: -10px; left: -10px;"></div>
                     <p class="text-[8px] uppercase tracking-widest text-gold-dark font-black mb-1 italic">Madrina de confirmación</p>
                     <p class="text-xl font-serif-elegant">Melanie Sarahí López</p>
                 </div>
@@ -258,11 +332,12 @@
         </div>
     </section>
 
-    <!-- Ubicación Única -->
+    <!-- Ubicación -->
     <section class="py-20 px-4 reveal reveal-up">
         <div class="max-w-[400px] mx-auto text-center">
-            <div class="card-glass p-10 rounded-[45px] shadow-2xl">
-                <div class="ornament ornament-tr"></div><div class="ornament ornament-bl"></div>
+            <div class="card-glass p-10 rounded-[45px] shadow-2xl overflow-visible">
+                <div class="corner-custom-img"></div>
+                <div class="ornament-simple orn-tr"></div>
                 
                 <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md border border-gold-light/20">
                     <i class="fa-solid fa-location-dot text-3xl gold-text"></i>
@@ -275,8 +350,8 @@
         </div>
     </section>
 
-    <!-- Programa -->
-    <section class="py-20 px-6 bg-white reveal">
+    <!-- Itinerario -->
+    <section class="py-20 px-6 reveal">
         <div class="max-w-[340px] mx-auto">
             <h3 class="text-2xl font-serif-elegant text-center mb-12 gold-text">Itinerario</h3>
             <div class="relative space-y-12">
@@ -314,8 +389,8 @@
         </div>
     </section>
 
-    <!-- Corte: Vertical Grid -->
-    <section class="py-20 px-4 bg-[#fdfcf0]/40 reveal">
+    <!-- Corte Honor -->
+    <section class="py-20 px-4 reveal">
         <div class="max-w-xl mx-auto text-center">
             <h3 class="text-2xl font-serif-elegant mb-16 gold-text">Corte de Honor</h3>
             
@@ -337,9 +412,10 @@
         </div>
     </section>
 
-    <!-- RSVP: Mobile UI -->
+    <!-- RSVP -->
     <section class="py-20 px-4 reveal reveal-up">
-        <div class="max-w-[360px] mx-auto card-glass p-10 rounded-[40px] shadow-2xl">
+        <div class="max-w-[360px] mx-auto card-glass p-10 rounded-[40px] shadow-2xl overflow-visible">
+            <div class="corner-custom-img"></div>
             <h3 class="text-2xl font-serif-elegant text-center mb-6 gold-text">Asistencia</h3>
             <p class="text-center text-[10px] text-gray-400 mb-10 italic uppercase tracking-widest font-bold">Confirma antes del 1 de Mayo.</p>
             
@@ -359,24 +435,23 @@
         </div>
     </section>
 
-    <footer class="py-20 text-center bg-[#fdfcf0]">
+    <footer class="py-20 text-center bg-white/20">
         <p class="font-cursive text-6xl gold-text mb-6">¡Te espero!</p>
         <div class="h-[1px] bg-gradient-to-r from-transparent via-gold-light/30 to-transparent w-48 mx-auto mb-8"></div>
         <p class="text-[8px] text-gray-400 uppercase tracking-widest font-black">Mis Quince Años - Maricruz García López</p>
     </footer>
 
     <script>
-        // --- Carrusel Optimized for Mobile ---
+        // --- Carrusel ---
         let currentSlide = 0;
         const totalSlides = 10;
         const slideElement = document.getElementById('carouselSlide');
         function updateSlide() { slideElement.style.transform = `translateX(-${currentSlide * 100}%)`; }
         function nextSlide() { currentSlide = (currentSlide + 1) % totalSlides; updateSlide(); }
         function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; updateSlide(); }
+        setInterval(nextSlide, 5000);
         
-        let carouselInterval = setInterval(nextSlide, 5000);
-        
-        // --- Countdown Logic ---
+        // --- Countdown ---
         const targetDate = new Date("May 16, 2026 14:00:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -389,29 +464,23 @@
         }
         setInterval(updateCountdown, 1000); updateCountdown();
 
-        // --- WhatsApp Interaction ---
+        // --- WhatsApp ---
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('guestName').value;
             const pax = document.getElementById('guestCount').value;
             const message = `¡Hola Maricruz! Confirmamos asistencia familiar a tus XV años. Familia: ${name}, Asistentes: ${pax}. ¡Allí nos vemos!`;
             const whatsappUrl = `https://wa.me/524432216719?text=${encodeURIComponent(message)}`;
-            
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#b8860b', '#d4af37', '#fdfcf0'] });
-            
             setTimeout(() => { window.open(whatsappUrl, '_blank'); }, 1200);
         });
 
-        // --- Intersection Observer for Scroll Animations ---
-        const observerOptions = { threshold: 0.15 };
+        // --- Scroll Observer ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, observerOptions);
-
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
