@@ -404,7 +404,7 @@
                     <div class="flex items-center gap-6 reveal reveal-up">
                         <div class="z-10 w-12 h-12 bg-white border border-gold-light rounded-full flex items-center justify-center shadow-md"><i class="fa-solid fa-church gold-text text-sm"></i></div>
                         <div class="flex-1">
-                            <span class="text-gold-dark font-black text-[10px]">14:00 PM</span>
+                            <span class="text-gold-dark font-black text-[10px]">13:00 PM</span>
                             <p class="font-serif-elegant text-lg">Misa de Acción de Gracias</p>
                         </div>
                     </div>
@@ -573,7 +573,8 @@
         function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; updateSlide(); }
         setInterval(nextSlide, 5000);
         
-        const targetDate = new Date("May 16, 2026 14:00:00").getTime();
+        // Actualizado a las 13:00 (1:00 PM)
+        const targetDate = new Date("May 16, 2026 13:00:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
             const dist = targetDate - now;
