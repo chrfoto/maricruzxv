@@ -569,7 +569,6 @@
         function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; updateSlide(); }
         setInterval(nextSlide, 5000);
         
-        // Actualizado a las 13:00 (1:00 PM)
         const targetDate = new Date("May 16, 2026 13:00:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -612,9 +611,19 @@
             const message = document.getElementById('guestMessage').value;
             const pax = document.getElementById('guestCount').value;
             const fullMessage = `¡Hola Maricruz! Confirmamos asistencia familiar a tus XV años. Familia: ${name}. Mensaje: ${message}. Asistentes: ${pax}.`;
+            
             const whatsappUrl = `https://wa.me/524432216719?text=${encodeURIComponent(fullMessage)}`;
+            
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#b8860b', '#d4af37', '#fdfcf0'] });
-            setTimeout(() => { window.open(whatsappUrl, '_blank'); }, 1200);
+            
+            // Creamos un enlace temporal para asegurar la apertura en móvil sin bloqueos
+            const link = document.createElement('a');
+            link.href = whatsappUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
 
         const observer = new IntersectionObserver((entries) => {
